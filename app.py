@@ -7,16 +7,16 @@ import plotly.graph_objs as go
 app = dash.Dash(__name__)
 
 # Read data from the first Excel file (your existing data)
-df = pd.read_excel("H:\wto-data.xlsx")
+df = pd.read_excel("assets\wto-data.xlsx")
 
 # Read data from the second Excel file (for the second chart)
-df2 = pd.read_excel("H:\wto-cumulative.xlsx")  # Replace with the actual path
+df2 = pd.read_excel("assets\wto-cumulative.xlsx")  # Replace with the actual path
 
 # Read data from the third Excel file (for the third chart)
-df3 = pd.read_excel("H:\wto-relative-data.xlsx")  # Replace with the actual path
+df3 = pd.read_excel("assets\wto-relative-data.xlsx")  # Replace with the actual path
 
 # Read data from the fourth Excel file (for the new chart)
-df4 = pd.read_excel("H:\wto-relative-data-cumulative.xlsx")  # Replace with the actual path
+df4 = pd.read_excel("assets\wto-relative-data-cumulative.xlsx")  # Replace with the actual path
 
 # Define unique options for Indicator, Importing Region, Exporter, and Commodity
 indicator_options = ['Exports', 'Imports']  # Customize based on your data
