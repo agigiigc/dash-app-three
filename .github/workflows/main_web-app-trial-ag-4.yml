@@ -48,7 +48,7 @@ jobs:
     needs: build
     environment:
       name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+      url: ${{ needs.build.outputs.webapp-url }}
     
     steps:
       - name: Download artifact from build job
@@ -59,9 +59,13 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
+      - name: 'Azure Login'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: 'Deploy to Azure Web App - Web Deploy'
         uses: azure/webapps-deploy@v2
-        id: deploy-webdeploy
         with:
           app-name: 'web-app-trial-ag-4'
           slot-name: 'Production'
@@ -69,7 +73,6 @@ jobs:
 
       - name: 'Deploy to Azure Web App - FTP'
         uses: azure/webapps-deploy@v2
-        id: deploy-ftp
         with:
           app-name: 'web-app-trial-ag-4'
           slot-name: 'Production'
@@ -77,8 +80,7 @@ jobs:
 
       - name: 'Deploy to Azure Web App - Zip Deploy'
         uses: azure/webapps-deploy@v2
-        id: deploy-zipdeploy
         with:
           app-name: 'web-app-trial-ag-4'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_ZIPDEPLOY }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_ZIPDEPLOY }
