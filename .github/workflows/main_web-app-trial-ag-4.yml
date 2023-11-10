@@ -59,11 +59,26 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      
-      - name: 'Deploy to Azure Web App'
+      - name: 'Deploy to Azure Web App - Web Deploy'
         uses: azure/webapps-deploy@v2
-        id: deploy-to-webapp
+        id: deploy-webdeploy
         with:
           app-name: 'web-app-trial-ag-4'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2756092A19D044A595DACC869FB95418 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_WEBDEPLOY }}
+
+      - name: 'Deploy to Azure Web App - FTP'
+        uses: azure/webapps-deploy@v2
+        id: deploy-ftp
+        with:
+          app-name: 'web-app-trial-ag-4'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FTP }}
+
+      - name: 'Deploy to Azure Web App - Zip Deploy'
+        uses: azure/webapps-deploy@v2
+        id: deploy-zipdeploy
+        with:
+          app-name: 'web-app-trial-ag-4'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_ZIPDEPLOY }}
